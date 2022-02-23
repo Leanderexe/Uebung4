@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.amihaiemil.web:docker-java-api:0.0.13">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/amihaiemil/web/docker-java-api/0.0.13/docker-java-api-0.0.13.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/amihaiemil/web/docker-java-api/0.0.13/docker-java-api-0.0.13-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/amihaiemil/web/docker-java-api/0.0.13/docker-java-api-0.0.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

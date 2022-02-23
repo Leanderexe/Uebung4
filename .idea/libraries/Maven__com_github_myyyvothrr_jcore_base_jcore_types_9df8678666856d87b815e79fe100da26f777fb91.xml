@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.myyyvothrr.jcore-base:jcore-types:9df8678666856d87b815e79fe100da26f777fb91">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/myyyvothrr/jcore-base/jcore-types/9df8678666856d87b815e79fe100da26f777fb91/jcore-types-9df8678666856d87b815e79fe100da26f777fb91.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/myyyvothrr/jcore-base/jcore-types/9df8678666856d87b815e79fe100da26f777fb91/jcore-types-9df8678666856d87b815e79fe100da26f777fb91-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/myyyvothrr/jcore-base/jcore-types/9df8678666856d87b815e79fe100da26f777fb91/jcore-types-9df8678666856d87b815e79fe100da26f777fb91-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
