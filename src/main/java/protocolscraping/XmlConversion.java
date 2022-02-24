@@ -367,8 +367,19 @@ public class XmlConversion {
                 NodeList date = doc.getElementsByTagName("datum");
                 String Datum = date.item(0).getTextContent();
 
+                for (int j = 0;j < tagesOP.getLength(); j++) {
+                    List Speaker_id = new ArrayList();
+                    List Kommentare_Liste = new ArrayList(); // Holds every comment made.
+                    List rede_id_list = new ArrayList();
+                    List Inhalt_Liste = new ArrayList();  // Holds every comment + every speech.
+                    StringBuilder Titel = new StringBuilder();
 
-                //Will Rede Inhalt, mit Redner, mit Datum der Sitzung, mit id (noch was?) holen und in mongodb speichern
+
+
+
+                }
+
+                //Will Rede Inhalt, mit Redner, mit Kommentaren, mit Datum der Sitzung, mit id (noch was?) holen und in mongodb speichern
 
 
             }
