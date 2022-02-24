@@ -32,7 +32,7 @@ public class DatabaseOperation implements Operation {
 
     private static DatabaseOperation databaseOperation;
 
-    private DatabaseOperation() {
+    public DatabaseOperation() {
         mongoDBConnectionHandler = new MongoDBConnectionHandler();
     }
 
@@ -126,5 +126,6 @@ public class DatabaseOperation implements Operation {
         mongoDBConnectionHandler.getDatabase().getCollection(collection).deleteOne(Filters.eq(key, value));
         System.out.println(key + " is deleted successfully!");
     }
+
 
 }
