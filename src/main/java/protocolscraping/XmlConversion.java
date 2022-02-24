@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -24,6 +26,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import scala.Int;
 
 public class XmlConversion {
@@ -71,7 +74,15 @@ public class XmlConversion {
         System.out.println(datas);
         System.out.println("HALLO");
 
-        extractSpeech(datas);
+        try {
+            extractSpeech(datas);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
 
 
         xmlToBsonDocument(datas);
@@ -338,9 +349,32 @@ public class XmlConversion {
     }
 
 
-    private void extractSpeech(Map<String, Map<String,String>> data) {
+    private void extractSpeech(Map<String, Map<String,String>> datas) throws ParserConfigurationException, IOException, SAXException {
+
+        for (Map.Entry<String, Map<String,String>> data : datas.entrySet()) {
+
+            Map<String, String> xmlURL = data.getValue();
+
+            for (Entry<String, String> string : xmlURL.entrySet()) {
+
+                String xml = getPageSource(parentURL + string.getKey());
+
+                DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = fac.newDocumentBuilder();
+                org.w3c.dom.Document doc = db.parse(xml);
+
+                NodeList tagesOP = doc.getElementsByTagName("tagesordnungspunkt");
+                NodeList date = doc.getElementsByTagName("datum");
+                String Datum = date.item(0).getTextContent();
 
 
+                //Will Rede Inhalt, mit Redner, mit Datum der Sitzung, mit id (noch was?) holen und in mongodb speichern
+
+
+            }
+
+
+        }
 
 
     }
