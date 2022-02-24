@@ -1,10 +1,5 @@
 # Abschluss
 
-Files downloader and store the content in bson form in mongo database.
-
-## Installation
-
-Install java 8 and run runner.AppRunner class to the run application
 
 ## Description
 The changes are done in FilesDownloader class, which downloads the files,
