@@ -84,7 +84,7 @@ public class RestAPI {
             for(Document doc: db.findAllDocument("redner")){
                 rednerlist.add(doc.toJson());
             }
-            return "{" + "\"redner\": " + rednerlist + "}";
+            return "{" + "\"redner\": " + rednerlist + "," + "\"success\": true" + "}";
         });
 
 
