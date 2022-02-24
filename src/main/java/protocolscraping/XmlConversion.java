@@ -24,6 +24,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import scala.Int;
 
 public class XmlConversion {
 
@@ -34,6 +35,10 @@ public class XmlConversion {
     private final String REDNER_LIST_KEY = "rednerliste";
     private final String REDNER_KEY = "redner";
 
+    private final String REDE_LIST_KEY = "redeliste";
+    private final String REDE_KEY = "rede";
+    Integer namecounter;
+    String speechcontent;
     /*
     * Identifier for database operation
     * */
@@ -64,6 +69,9 @@ public class XmlConversion {
         Map<String, Map<String,String>> datas = parseXmlUrl(endPointIds);
 
         System.out.println(datas);
+        System.out.println("HALLO");
+
+        extractSpeech(datas);
 
 
         xmlToBsonDocument(datas);
@@ -245,23 +253,72 @@ public class XmlConversion {
             Collection<Object> values = document.values();
             values.forEach(o -> {
                 org.bson.Document document1 = (org.bson.Document) o;
+               // org.bson.Document document2 = (org.bson.Document) o;
 
                 List<org.bson.Document> data = (ArrayList<org.bson.Document>)
                         (((org.bson.Document) ((org.bson.Document)
                                 document1.get(REDNER_LIST_KEY))).get(REDNER_KEY));
 
+               /* org.bson.Document sitzung = (org.bson.Document) document2.get("sitzungsverlauf");
+                List<org.bson.Document> speechData = (ArrayList<org.bson.Document>)  sitzung.get("tagesordnungspunkt");
+
+
+                org.bson.Document vorspann = (org.bson.Document) document1.get("vorspann");
+                org.bson.Document kopfdaten = (org.bson.Document) vorspann.get("kopfdaten");
+                org.bson.Document veranstaltungsdaten = (org.bson.Document) kopfdaten.get("veranstaltungsdaten");
+                org.bson.Document info = (org.bson.Document) veranstaltungsdaten.get("datum");
+                String datum = info.getString("date");
+                System.out.println(datum + " Hallloo");
+
+                //speechData.forEach(s -> {
+
+                //});
+
+                speechData.forEach(sData -> {
+
+                    List<org.bson.Document> speech = (List<org.bson.Document>) sData.get("rede");
+
+                    namecounter = 0;
+                    System.out.println("SPEEEECH" + speech + "HOO");
+                    speech.forEach(s -> {
+                        if (namecounter == 0) {
+                            org.bson.Document name = (org.bson.Document) s.get("name");
+                            org.bson.Document id = (org.bson.Document) s.get("id");
+
+                            System.out.println("HAA" + name + "HOO");
+                            System.out.println("HAA" + id + "HOO");
+
+                            namecounter += 1;
+                        }
+
+                        List<org.bson.Document> p = (List<org.bson.Document>) s.get("p");
+
+                        p.forEach(content -> {
+                            org.bson.Document cPart = (org.bson.Document) content.get("name");
+                            speechcontent = speechcontent + " " + cPart;
+                        });
+
+                    });
+
+
+                    System.out.println("HII" + speech + "HII");
+
+                });
+
+*/
+
                 data.forEach(d -> {
                     try {
-                        org.bson.Document document2 = (org.bson.Document) d.get("name");
+                        org.bson.Document speakerdoc = (org.bson.Document) d.get("name");
                         Integer id = (Integer) d.get("id");
 
                         /*
                         * Creating custom document for avoid duplicates
                         * */
                         org.bson.Document doc = new org.bson.Document(DatabaseOperation.ID_COL_KEY, id);
-                        doc.append(DatabaseOperation.VORNAME_COL_KEY, document2.get(DatabaseOperation.VORNAME_COL_KEY).toString());
-                        doc.append(DatabaseOperation.FRAKTION_COL_KEY, document2.get(DatabaseOperation.FRAKTION_COL_KEY).toString());
-                        doc.append(DatabaseOperation.SURNAME_COL_KEY, document2.get(DatabaseOperation.SURNAME_COL_KEY).toString());
+                        doc.append(DatabaseOperation.VORNAME_COL_KEY, speakerdoc.get(DatabaseOperation.VORNAME_COL_KEY).toString());
+                        doc.append(DatabaseOperation.FRAKTION_COL_KEY, speakerdoc.get(DatabaseOperation.FRAKTION_COL_KEY).toString());
+                        doc.append(DatabaseOperation.SURNAME_COL_KEY, speakerdoc.get(DatabaseOperation.SURNAME_COL_KEY).toString());
 
                         /*
                         * Insert document in database
@@ -273,9 +330,20 @@ public class XmlConversion {
 
                 });
 
+
             });
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
+
+    private void extractSpeech(Map<String, Map<String,String>> data) {
+
+
+
+
+    }
+
+
 }
