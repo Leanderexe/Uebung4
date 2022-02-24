@@ -250,6 +250,15 @@ public class XmlConversion {
                         (((org.bson.Document) ((org.bson.Document)
                                 document1.get(REDNER_LIST_KEY))).get(REDNER_KEY));
 
+                org.bson.Document vorspann = (org.bson.Document) document1.get("vorspann");
+                org.bson.Document kopfdaten = (org.bson.Document) vorspann.get("kopfdaten");
+                org.bson.Document veranstaltungsdaten = (org.bson.Document) kopfdaten.get("veranstaltungsdaten");
+                org.bson.Document info = (org.bson.Document) veranstaltungsdaten.get("datum");
+                String datum = info.getString("date");
+                System.out.println("Junge" + datum + "Halllooooo");
+
+
+
                 data.forEach(d -> {
                     try {
                         org.bson.Document document2 = (org.bson.Document) d.get("name");
