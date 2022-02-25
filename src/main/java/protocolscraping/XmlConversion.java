@@ -492,7 +492,6 @@ public class XmlConversion {
 
                 }
 
-                //Will Rede Inhalt, mit Redner, mit Kommentaren, mit Datum der Sitzung, mit id (noch was?) holen und in mongodb speichern
 
 
             }

@@ -46,13 +46,8 @@
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.7" level="project" />
     <orderEntry type="library" name="Maven: com.github.texttechnologylab:UIMATypeSystem:1d23e466bcae2cf36fb06aa41ae85b319a7f2fe2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.uima:uimaj-core:2.10.4" level="project" />
-    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.3.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.uima:uimafit-core:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.2" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging-api:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:3.2.16.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.2.16.RELEASE" level="project" />
@@ -350,10 +345,6 @@
     <orderEntry type="library" name="Maven: org.bytedeco:flandmark:1.07-1.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:leptonica:1.79.0-1.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:tesseract:4.1.1-1.5.3" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:11" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:opencv-platform:4.3.0-1.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:openblas-platform:0.3.9-1.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:openblas:android-arm:0.3.9-1.5.3" level="project" />
@@ -481,11 +472,9 @@
     <orderEntry type="library" name="Maven: com.github.texttechnologylab.textimager-uima:textimager-uima-tagme:a1a0b0e94fdb448eb23327c760cb06f80f75c436" level="project" />
     <orderEntry type="library" name="Maven: com.martiansoftware:jsap:2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.7" level="project" />
     <orderEntry type="library" name="Maven: commons-digester:commons-digester:1.8.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: it.unimi.dsi:dsiutils:2.0.4" level="project" />
     <orderEntry type="library" name="Maven: it.unimi.dsi:fastutil:6.4.1" level="project" />
     <orderEntry type="library" name="Maven: it.unimi.dsi:sux4j:3.0.2" level="project" />
@@ -538,6 +527,9 @@
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-io-tcf-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: eu.clarin.weblicht:wlfxb:1.3.3" level="project" />
     <orderEntry type="library" name="Maven: eu.clarin.weblicht:oaipmh-cmdi-bindings:1.0.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-transform-asl:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.dkpro.core:dkpro-core-api-coref-asl:1.12.0" level="project" />
@@ -576,8 +568,6 @@
     <orderEntry type="library" name="Maven: de.tudarmstadt.ukp.wikipedia:de.tudarmstadt.ukp.wikipedia.parser:0.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.github.texttechnologylab:Utilities:1.1.1-uima-2.10.4" level="project" />
     <orderEntry type="library" name="Maven: com.goebl:david-webb:1.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.7" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-core:1.5.21" level="project" />
@@ -621,5 +611,10 @@
     <orderEntry type="library" name="Maven: junit:junit:4.10" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.14.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
   </component>
 </module>
