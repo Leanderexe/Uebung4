@@ -3,6 +3,9 @@ import de.fau.cs.osr.utils.StringUtils;
 import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.google.gson.Gson;
+import spark.Filter;
+import spark.ResponseTransformer;
 
 
 import javax.json.Json;
@@ -15,13 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 import static spark.Spark.*;
 
 
 public class RestAPI {
+    private static JsonUtil util = new JsonUtil();
     static DatabaseOperation db = new DatabaseOperation();
     public static void main(String[] args) throws IOException, JSONException {
-        String[] redner = {"angela Merkel", "Putin", "Markon", "Lauterbach", "Amthor", "trump", "sleepy joe"};
+        // String[] redner = {"angela Merkel", "Putin", "Markon", "Lauterbach", "Amthor", "trump", "sleepy joe"};
         List key = new ArrayList();
         List value = new ArrayList();
         for(int i = 0; i < 10; i++){
@@ -36,7 +41,7 @@ public class RestAPI {
         //String output = getsingleJson("redner", rednerlist.toString());
         //System.out.println(rednerlist);
 
-
+/*
         String rednerstring = "{";
         for (int i = 0; i < redner.length; i++){
             if (i == redner.length-1){
@@ -47,9 +52,9 @@ public class RestAPI {
             }
         }
 
-        String json = getJson(key, value);
         System.out.println(rednerstring);
-
+        */
+        String json = getJson(key, value);
         // url: http://localhost:4567/rest
         init();
         //initExceptionHandler((e) -> System.out.println("Ups! Der Server konnte leider nicht gestartet werden."));
@@ -73,19 +78,29 @@ public class RestAPI {
         //halt(400);
 
          */
-        String finalRednerstring = rednerstring;
+        final String finalRednerstring = "hello world";
         /**
          * Prints out JSON with all rendner at http://localhost:4567/redner
          * @return String with the all Redner in JSON.
          */
         get("/redner", (request, response) -> {
-            response.body(json);
             List rednerlist = new ArrayList();
             for(Document doc: db.findAllDocument("redner")){
-                rednerlist.add(doc.toJson());
+                rednerlist.add(doc);
             }
-            return "{" + "\"redner\": " + rednerlist + "}";
+                return rednerlist;
+            }, util.json());
+
+        after((request, response) -> {
+            response.type("application/json");
         });
+
+        // grant Access so one can get page content from javascript.
+        after((Filter) (request, response) -> {
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Methods", "GET");
+                });
+
 
 
         /**
@@ -102,11 +117,11 @@ public class RestAPI {
                 rednerelement = rednerelement.replace("fraktion", "");
                 rednerelement = rednerelement.replace("nachname", "");
                 if (rednerelement.contains(searchstr)){
-                    rednerlist.add(doc.toJson());
+                    rednerlist.add(doc);
                 }
             }
-            return "{" + "\"redner\": " + rednerlist + "}";
-        });
+            return rednerlist;
+        }, util.json());
 
         /**
          * Prints out JSON with all Tokens at http://localhost:4567/token
@@ -116,6 +131,8 @@ public class RestAPI {
         get("/token", (request, response) -> {
             return json;
         });
+
+        get("/hello", (request, response) ->  "Hello World", util.json());
 
         /**
          * Prints out JSON with all POS at http://localhost:4567/pos
@@ -184,4 +201,7 @@ public class RestAPI {
         return json;
     }
 
+
+
 }
+
