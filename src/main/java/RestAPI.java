@@ -78,7 +78,7 @@ public class RestAPI {
         //halt(400);
 
          */
-        final String finalRednerstring = "hello world";
+        //final String finalRednerstring = "hello world";
         /**
          * Prints out JSON with all rendner at http://localhost:4567/redner
          * @return String with the all Redner in JSON.
