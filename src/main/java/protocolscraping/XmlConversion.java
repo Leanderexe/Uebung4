@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import database.DatabaseOperation;
+import entity.Speech;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
@@ -348,7 +349,6 @@ public class XmlConversion {
         }
     }
 
-
     private void extractSpeech(Map<String, Map<String,String>> datas) throws ParserConfigurationException, IOException, SAXException {
 
         for (Map.Entry<String, Map<String,String>> data : datas.entrySet()) {
@@ -363,6 +363,7 @@ public class XmlConversion {
                 DocumentBuilder db = fac.newDocumentBuilder();
                 org.w3c.dom.Document doc = db.parse(xml);
 
+
                 NodeList tagesOP = doc.getElementsByTagName("tagesordnungspunkt");
                 NodeList date = doc.getElementsByTagName("datum");
                 String Datum = date.item(0).getTextContent();
@@ -373,9 +374,100 @@ public class XmlConversion {
                     List rede_id_list = new ArrayList();
                     List Inhalt_Liste = new ArrayList();  // Holds every comment + every speech.
                     StringBuilder Titel = new StringBuilder();
+                    List redner_id_list = new ArrayList();
+                    List Speaker_list = new ArrayList();
 
 
+                        Node Node_OP = (tagesOP.item(j));
+                        if (Node_OP.getNodeType() == Node.ELEMENT_NODE) {
+                            org.w3c.dom.Element top = (org.w3c.dom.Element) Node_OP;
+                            String top_id = top.getAttribute("top-id");  // Gibt Tagesordnungspunkt aus.
+                            NodeList child_list = top.getChildNodes();
+                            for (int t = 0; t < child_list.getLength(); t++) {
+                                Node child = child_list.item(t);
+                                if (child.getNodeType() == Node.ELEMENT_NODE) {
+                                    org.w3c.dom.Element Rede = (org.w3c.dom.Element) child;
+                                    if (Rede.getTagName() == "p") {
+                                        Inhalt_Liste.add(Rede.getTextContent());
 
+                                        if (Rede.getAttribute("klasse").equals("T_NaS")) {
+                                            Titel.append(" " + Rede.getTextContent());
+                                        }
+                                        if (Rede.getAttribute("klasse").equals("T_fett")) {
+                                            Titel.append(" " + Rede.getTextContent());
+                                        }
+                                    } else if (Rede.getTagName() == "kommentar") {
+                                        Inhalt_Liste.add(Rede.getTextContent());
+                                    }
+
+                                    if (Rede.getTagName() == "rede") {
+                                        String redner_id = "0";
+                                        String Vorname = null;
+                                        List Kommentare_pro_rede = new ArrayList();
+                                        List Speech_Liste = new ArrayList();  // Holds every speech.
+                                        String rede_id = Rede.getAttribute("id");
+                                        NodeList rede_child_list = Rede.getChildNodes();
+
+                                        for (int z = 0; z < rede_child_list.getLength(); z++) {
+                                            Node text_node = rede_child_list.item(z);
+
+
+                                            if (text_node.getNodeType() == Node.ELEMENT_NODE) {
+                                                org.w3c.dom.Element text = (org.w3c.dom.Element) text_node;
+                                                if (text.getTagName() == "p") {
+                                                    if (text.getAttribute("klasse").equals("redner")) {
+                                                        NodeList redner_node = text.getChildNodes();
+                                                        for (int k = 0; k < redner_node.getLength(); k++) {
+                                                            Node r_node = redner_node.item(k);
+                                                            if (r_node.getNodeType() == Node.ELEMENT_NODE) {
+                                                                org.w3c.dom.Element redner = (org.w3c.dom.Element) r_node;
+                                                                if (redner.getTagName() == "redner") {
+                                                                    redner_id = redner.getAttribute("id"); // Redner_id
+                                                                    redner_id_list.add(redner_id);
+                                                                    Speaker_id.add(redner_id);
+
+                                                                    NodeList child_node = redner.getChildNodes();
+                                                                    for (int n = 0; n < child_node.getLength(); n++) {
+                                                                        Node ch = child_node.item(n);
+                                                                        if (ch.getNodeType() == Node.ELEMENT_NODE) {
+                                                                            org.w3c.dom.Element ch_element = (org.w3c.dom.Element) ch;
+
+                                                                            NodeList ch_node = ch_element.getChildNodes();
+                                                                            for (int u = 0; u < ch_node.getLength(); u++) {
+                                                                                Node redner_prop = ch_node.item(u);
+                                                                                if (redner_prop.getNodeType() == Node.ELEMENT_NODE) {
+                                                                                    org.w3c.dom.Element redner_prop_elem = (org.w3c.dom.Element) redner_prop;
+
+                                                                                    if (redner_prop_elem.getTagName() == "vorname") {  // get content from
+                                                                                        Vorname = redner_prop_elem.getTextContent();
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    } else {
+                                                        Inhalt_Liste.add(text.getTextContent());
+                                                        Speech_Liste.add(text.getTextContent());
+                                                    }
+                                                } else if (text.getTagName() == "kommentar") {
+                                                    Kommentare_pro_rede.add(text.getTextContent());
+                                                    Kommentare_Liste.add(text.getTextContent());
+                                                    Inhalt_Liste.add(text.getTextContent());
+                                                }
+                                            }
+                                        }
+                                        //top_id für Tagesordnungspunkt
+                                        Speech Speaker = new Speech(Datum, redner_id, rede_id, Speech_Liste, Kommentare_pro_rede);
+                                        Speaker.printSpeech();
+                                        Speaker_list.add(Speaker);
+                                    }
+
+                                }
+                            }
+                        }
 
                 }
 
