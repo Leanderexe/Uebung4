@@ -1,6 +1,7 @@
 package protocolscraping;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -27,6 +28,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import scala.Int;
 
@@ -39,10 +41,16 @@ public class XmlConversion {
     private final String REDNER_LIST_KEY = "rednerliste";
     private final String REDNER_KEY = "redner";
 
-    private final String REDE_LIST_KEY = "redeliste";
-    private final String REDE_KEY = "rede";
-    Integer namecounter;
-    String speechcontent;
+    private final String REDE_COLL_KEY = "speeches";
+
+    private final String REDE_ID_KEY = "redeID";
+    private final String REDE_SPEAKER_KEY = "rednerID";
+    private final String REDE_COMMENTS_KEY = "comments";
+    private final String REDE_DATE_KEY = "date";
+    private final String REDE_CONTENT_KEY = "content";
+
+
+
     /*
     * Identifier for database operation
     * */
@@ -357,11 +365,17 @@ public class XmlConversion {
 
             for (Entry<String, String> string : xmlURL.entrySet()) {
 
+                System.out.println(string.getKey() + " JOO");
+
                 String xml = getPageSource(parentURL + string.getKey());
 
+                //System.out.println(xml);
+
                 DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
+                fac.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
                 DocumentBuilder db = fac.newDocumentBuilder();
-                org.w3c.dom.Document doc = db.parse(xml);
+
+                org.w3c.dom.Document doc = db.parse(new InputSource(new StringReader(xml)) );
 
 
                 NodeList tagesOP = doc.getElementsByTagName("tagesordnungspunkt");
@@ -460,9 +474,16 @@ public class XmlConversion {
                                             }
                                         }
                                         //top_id für Tagesordnungspunkt
-                                        Speech Speaker = new Speech(Datum, redner_id, rede_id, Speech_Liste, Kommentare_pro_rede);
-                                        Speaker.printSpeech();
-                                        Speaker_list.add(Speaker);
+                                        Speech speech = new Speech(Datum, redner_id, rede_id, Speech_Liste, Kommentare_pro_rede);
+                                        speech.printSpeech();
+                                        //Speaker_list.add(speech);
+                                        org.bson.Document bsonSpeech = new org.bson.Document(REDE_DATE_KEY, Datum);
+                                        bsonSpeech.append(REDE_SPEAKER_KEY,redner_id);
+                                        bsonSpeech.append(REDE_ID_KEY, rede_id);
+                                        bsonSpeech.append(REDE_CONTENT_KEY, Speech_Liste);
+                                        bsonSpeech.append(REDE_COMMENTS_KEY, Kommentare_pro_rede);
+
+                                        databaseOperation.insertOneDocument(REDE_COLL_KEY, bsonSpeech);
                                     }
 
                                 }

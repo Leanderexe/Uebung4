@@ -24,7 +24,7 @@ public class Speech {
     public void printSpeech() {
         System.out.println(" Date: " + date );
         System.out.println(" speakerID " + speakerID );
-        System.out.println(" spechID " + speechID );
+        System.out.println(" speechID " + speechID );
         System.out.println(" content " + content );
         System.out.println(" comments" + comments );
     }
