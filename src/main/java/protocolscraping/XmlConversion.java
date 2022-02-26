@@ -1,7 +1,10 @@
 package protocolscraping;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -80,20 +83,16 @@ public class XmlConversion {
         //Here we are getting the xml-URLs by xml-ID
         Map<String, Map<String,String>> datas = parseXmlUrl(endPointIds);
 
-        System.out.println(datas);
-        System.out.println("HALLO");
-
+/*
         try {
-            extractSpeech(datas);
+            //extractSpeech(datas);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
-        }
-
-
+        }*/
         xmlToBsonDocument(datas);
     }
 
@@ -218,6 +217,9 @@ public class XmlConversion {
 
     private void xmlToBsonDocument(Map<String, Map<String,String>> datas) {
 
+        System.out.println("JETZT LOS");
+        String protokolID;
+
         for (Map.Entry<String, Map<String,String>> data : datas.entrySet()) {
 
             Map<String,String> xmlURL = data.getValue();
@@ -225,8 +227,34 @@ public class XmlConversion {
 
             for (Entry<String, String> string : xmlURL.entrySet()) {
 
+
                 String xml = getPageSource(parentURL+string.getKey());
                 String name = string.getValue();
+
+/*
+                try {
+                    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                    dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+                    DocumentBuilder db = dbf.newDocumentBuilder();
+
+                    org.w3c.dom.Document doc = db.parse(new InputSource(new StringReader(xml)) );
+
+                    org.w3c.dom.Element plenarInfo = doc.getE("kopfdaten");
+                    for (int t = 0; t < plenarInfo.getLength(); t++) {
+                        Node child = plenarInfo.item(t);
+                        System.out.println("Plenar info  "+ child );
+                    }
+                    System.out.println( " LEtsgo" + plenarInfo );
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SAXException e) {
+                    e.printStackTrace();
+                }
+*/
+
+
 
                 JSONObject json = null;
                 try {
@@ -245,6 +273,7 @@ public class XmlConversion {
     }
 
     private void createCollectionByDoc(org.bson.Document document) {
+
         /*
         * Insert or update protocol in database
         * */
@@ -253,6 +282,9 @@ public class XmlConversion {
                 /*
                 * Only insert in db if its protocol
                 * */
+                //System.out.println("JAAMNA" + e + " HAAALILOLO");
+                //System.out.println(e.getValue() + " HAAALILOL");
+
                 if (e.getKey().contains(DatabaseOperation.PROTOKOL_KEY)) {
                     databaseOperation.insertOneDocument(DatabaseOperation.PROTOKOL_KEY, document1);
                 }
@@ -332,13 +364,32 @@ public class XmlConversion {
                         org.bson.Document speakerdoc = (org.bson.Document) d.get("name");
                         Integer id = (Integer) d.get("id");
 
+                        String vorname = speakerdoc.get(DatabaseOperation.VORNAME_COL_KEY).toString();
+                        String fraktion = speakerdoc.get(DatabaseOperation.FRAKTION_COL_KEY).toString();
+                        String nachname = speakerdoc.get(DatabaseOperation.SURNAME_COL_KEY).toString();
+
+                        PictureScrap picsy = new PictureScrap();
+                        String name = vorname + " " + nachname;
+                        System.out.println("JOOJOO" + name);
+                        URL speakerImg = picsy.run(name);
+                        String strImg = speakerImg.toString();
+                        //System.out.println("JOOJOO" + buffedPicsy);
+
+
                         /*
                         * Creating custom document for avoid duplicates
                         * */
                         org.bson.Document doc = new org.bson.Document(DatabaseOperation.ID_COL_KEY, id);
-                        doc.append(DatabaseOperation.VORNAME_COL_KEY, speakerdoc.get(DatabaseOperation.VORNAME_COL_KEY).toString());
-                        doc.append(DatabaseOperation.FRAKTION_COL_KEY, speakerdoc.get(DatabaseOperation.FRAKTION_COL_KEY).toString());
-                        doc.append(DatabaseOperation.SURNAME_COL_KEY, speakerdoc.get(DatabaseOperation.SURNAME_COL_KEY).toString());
+                        doc.append(DatabaseOperation.VORNAME_COL_KEY, vorname );
+                        doc.append(DatabaseOperation.FRAKTION_COL_KEY, fraktion);
+                        doc.append(DatabaseOperation.SURNAME_COL_KEY, nachname);
+                        doc.append(DatabaseOperation.REDNER_IMAGE, strImg);
+                        //Noch Fehler
+                        //doc.append(DatabaseOperation.REDNER_IMAGE, buffedPicsy);
+
+
+
+
 
                         /*
                         * Insert document in database

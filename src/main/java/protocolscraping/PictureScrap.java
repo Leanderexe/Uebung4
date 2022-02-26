@@ -18,7 +18,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static jdk.vm.ci.meta.JavaKind.Char;
 
 public class PictureScrap {
 
@@ -27,7 +26,7 @@ public class PictureScrap {
 		//String speakerName;
 
 
-		public BufferedImage run(String speakerName) {
+		public URL run(String speakerName) {
 
 			try {
 
@@ -38,7 +37,7 @@ public class PictureScrap {
 				Scarper scarper = new Scarper(url);
 				String img = scarper.init();
 
-				BufferedImage speakerIMG = scarper.getImageByName(img);
+				URL speakerIMG = scarper.getImageByName(img);
 				return speakerIMG;
 
 			} catch (URISyntaxException e) {
@@ -86,7 +85,7 @@ class Scarper {
 		return doc;
 	}
 
-	public BufferedImage getImageByName(String name) throws URISyntaxException {
+	public URL getImageByName(String name) throws URISyntaxException {
 
 		String parentUrl = "https://bilddatenbank.bundestag.de";
 		byte[] fileContent = null;
@@ -95,10 +94,13 @@ class Scarper {
 			URL uriella = new URL(parentUrl + name);
 			fileContent = IOUtils.toByteArray(uriella);
 			ByteArrayInputStream inStreambj = new ByteArrayInputStream(fileContent);
-			BufferedImage newImage = ImageIO.read(inStreambj);
-			ImageIO.write(newImage, "jpg", new File(name + ".jpg"));
+			//BufferedImage newImage = ImageIO.read(inStreambj);
+			//ImageIO.write(newImage, "jpg", new File(name ));
 			System.out.println("Image generated from the byte array.");
-			return newImage;
+			System.out.println("In Sreamy " + inStreambj);
+			System.out.println("Uriella " + uriella);
+			//return newImage;
+			return uriella;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

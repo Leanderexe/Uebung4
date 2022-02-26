@@ -22,6 +22,7 @@ public class DatabaseOperation implements Operation {
     public static final String SURNAME_COL_KEY = "nachname";
     public static final String FRAKTION_COL_KEY = "fraktion";
     public static final String VORNAME_COL_KEY = "vorname";
+    public static final String REDNER_IMAGE = "image";
     public static final String TITLE_COL_KEY = "title";
     public static final String ID_COL_KEY = "_id";
 
