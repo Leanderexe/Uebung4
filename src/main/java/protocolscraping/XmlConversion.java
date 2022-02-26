@@ -357,10 +357,13 @@ public class XmlConversion {
 
                 });
 
-*/
+                      */
 
-                data.forEach(d -> {
+
+
+                        data.forEach(d -> {
                     try {
+                        Thread.sleep(1200);
                         org.bson.Document speakerdoc = (org.bson.Document) d.get("name");
                         Integer id = (Integer) d.get("id");
 
@@ -374,6 +377,7 @@ public class XmlConversion {
                         URL speakerImg = picsy.run(name);
                         String strImg = speakerImg.toString();
                         //System.out.println("JOOJOO" + buffedPicsy);
+
 
 
                         /*
